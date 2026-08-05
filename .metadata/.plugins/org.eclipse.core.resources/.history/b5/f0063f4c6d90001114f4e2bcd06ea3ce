@@ -1,0 +1,10 @@
+spring.application.name=AI_API_Project
+
+# 서버 기본설정
+server.servlet.context-path=/ai
+server.port=8006
+
+# JSP - View Resolver 설정
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+

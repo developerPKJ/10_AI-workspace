@@ -1,0 +1,16 @@
+spring.application.name=AI_API_Project
+
+# 서버 기본설정
+server.servlet.context-path=/ai
+server.port=8006
+
+# JSP - View Resolver 설정
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+# Google Gemini API 연동 설정
+# API 키 설정
+spring.ai.google.genai.api-key=AQ.Ab8RN6L6t8l-IQxzS1NDKWvoi65XX_7Z2TIfHByr9batjVAqfg
+
+# 사용할 Gemini 버전 선택
+spring.ai.google.genai.chat.model=gemini-2.5-flash

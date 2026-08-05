@@ -1,0 +1,143 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+	<h1>AI (Artificial Intelligence, 인공 지능) 란?</h1>
+
+	<p>
+		- 인간의 학습, 추론, 판단 등의 지적 능력을 컴퓨터로 구현한 기술 (컴퓨터한테 그렇게 프로그래밍 해서 구현) <br>
+		- 넓은 의미로 따지면 AI 는 큰 카테고리고, 그 안에 머신러닝, 딥러닝, LLM 등이 포함됨!! <br> 
+		
+		<br>
+		
+		1. Machine Learning (ML, 머신러닝) : 데이터를 학습해서 패턴을 찾아내는 기술 <br>
+		예) 사람들의 키랑 몸무게 정보들을 가지고 발사이즈를 "예측" (Regression, 회귀) <br>
+		    사람들의 혈압, 몸무게 정보들을 가지고 당뇨인지 아닌지 "판별" (Classification, 분류) <br>
+		
+		2. Deep Learning (DL, 딥러닝) : 인공 신경망을 이용한 머신러닝의 한 분야 <br>
+		
+		3. Large Language Model (LLM, 거대 언어 모델) : 대규모 텍스트 데이터를 학습한 거대 언어 모델 (자연어) <br>
+		예) GPT, Claude, Gemini 등
+	</p>
+	
+	<br>
+	<hr>
+	
+	<h3>* LLM (Large Language Model)</h3>
+	
+	<p>
+		- 방대한 양의 텍스트 데이터를 학습하여 "자연어 (한국어, 영어, 중국어 등)" 를 이해하고 생성하는 AI 모델 <br>
+		- 핵심 원리 : 주어진 텍스트 (프롬프트) 다음에 올 "가장 적절한 단어" 를 "확률" 적으로 예측해서 자연어를 생성 <br>
+		<pre>
+		예) 나는 밥을 + 공부한다.
+					 먹는다. (O)
+					 사랑한다.
+			
+		   나는 스프링을 + 공부한다. (O)
+		   			   먹는다.
+		   			   사랑한다.
+		</pre>   	
+		  (참고로 옛날에는 확률이 아닌 문법적 규칙을 가지고 자연어를 생성했었음, 확률이 더 성능이 발전한 형태) <br>
+		
+		<br>
+		
+		- 대표 모델 : <br>
+		1) OpenAI - Chat-gpt 모델들 <br>
+		2) Google - Gemini <br>
+		3) Anthropic - Claude <br>
+		4) Meta - LLaMA
+	</p>
+	
+	<br>
+	<hr>
+	
+	<h3>* 프롬프트 (Prompt)</h3>
+	
+	<p>
+		- 사용자가 LLM 에게 보내는 입력 텍스트 (질문, 명령, 맥락 등) <br>
+		- LLM 의 응답 품질은 프롬프트를 어떻게 작성하느냐에 따라 크게 좌우됨!! <br>
+		
+		<br>
+		- 종류 : <br>
+		1) System Prompt : 개발자가 시스템 상에서 미리 설정해두는 메세지 <br>
+		2) User Prompt : 사용자가 직접 입력하는 메세지		
+	</p>
+	
+	<br>
+	<hr>
+	
+	<h3>* 토큰 (Token)</h3>
+	
+	<p>
+		- LLM 이 텍스트를 처리하는 최소 단위 (쉽게 말해 "단어" 개념) <br>
+		- 한국어 기준 한 글자 당 1 ~ 2 토큰, 영단어는 한 단어가 1 토큰 정도 <br>
+		- API 요금은 "입력 토큰" + "출력 토큰" 갯수 기준으로 과금될 수 있다!!
+	</p>
+	
+	<br>
+	<hr>
+	
+	<h3>* 우리는 API 방식을 쓸 예정!!</h3>
+	
+	<pre>
+								Spring Boot
+		JSP/React (화면) --> Controller (우리 서버) --> LLM API 서버 
+						<--						<--
+	</pre>
+	
+	<br>
+	<hr>
+	
+	<h3>* Spring AI</h3>
+	
+	<p>
+		- Spring 에서 제공하는 AI 관련 통합 프레임워크 (모듈) <br>
+		- 다양한 AI 모델들을 "동일한 인터페이스" 로 사용 가능 (어떤 모델을 쓰던 간에 코드는 동일하게 짬) <br>
+		
+		<br>
+		
+		- AI 모델과 연결, 대화하기 위한 객체, 메세지 또는 옵션 등을 묶은 객체 등 폭넓게 지원!! (자바 객체 형식)
+	</p>
+	
+	<br>
+	<hr>
+	
+	<h3>* 우리는 수업시간에 Gemini API 를 이용해볼 예정!!</h3>
+		
+	<p>
+		- 회원가입도 쉽고, 과금 위험 (부담) 도 제일 없고 하기 때문 <br>
+		
+		<br>
+		<a href="https://aistudio.google.com">Gemini API 키 발급</a>
+	</p>
+	
+	<br>
+	<hr>
+	
+	<h3>
+		<a href="/ai/chat1">AI 채팅 페이지로 이동 1</a>
+	</h3>
+	
+	<h3>
+		<a href="/ai/chat2">AI 채팅 페이지로 이동 2</a>
+	</h3>
+	
+	<h3>
+		<a href="/ai/chat3">AI 채팅 페이지로 이동 3</a>
+	</h3>
+	<!-- 문맥 유지 -->
+
+</body>
+</html>
+
+
+
+
+
+

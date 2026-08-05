@@ -1,0 +1,32 @@
+package com.kh.ai.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+@Controller
+public class AIController {
+
+	// 채팅 페이지로 이동 1
+	@GetMapping("/chat1")
+	public String chatPage1() {
+		
+		return "chatting1";
+		// > /WEB-INF/views/chatting1.jsp
+	}
+	
+	// 기본적인 채팅 요청을 받아 처리해주는 컨트롤러
+	@PostMapping("/chat1/send")
+	public void sendMessage1(String message) {
+		
+		
+	}
+	
+}
+
+
+
+
+
+

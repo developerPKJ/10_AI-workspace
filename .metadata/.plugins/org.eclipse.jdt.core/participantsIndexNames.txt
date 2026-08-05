@@ -1,0 +1,3 @@
+INDEX VERSION 1.134
+C:\10_AI-workspace\.metadata\.plugins\org.eclipse.jst.jsp.core\jspsearch\3238296664.index
+\AI_API_Project\src\main\java

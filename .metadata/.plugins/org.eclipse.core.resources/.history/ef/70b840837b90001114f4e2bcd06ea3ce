@@ -1,0 +1,17 @@
+package com.kh.ai.config;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AIConfig {
+	
+	// ChatClient 를 Bean 으로 등록하기
+	@Bean
+	public ChatClient chatClient(ChatClient.Builder builder) {
+		
+		
+	}
+
+}

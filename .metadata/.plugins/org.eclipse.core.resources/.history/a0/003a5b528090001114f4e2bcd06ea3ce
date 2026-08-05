@@ -1,0 +1,47 @@
+package com.kh.ai.config;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AIConfig {
+	
+	// ChatClient 를 Bean 으로 등록하기
+	@Bean
+	public ChatClient chatClient(ChatClient.Builder builder) {
+		// > ChatClient.Builder : ChatModel 객체를 기반으로 ChatClient 객체를 생성할 때 도와주는 역할
+		
+		// return builder.build();
+		// > build() 메소드 호출 시 ChatClient 객체 생성
+		
+		/*
+		 * * Hallucination (할루시네이션, 환각)
+		 * 
+		 * - LLM 이 사실이 아닌 정보를 마치 사실인것마냥 그럴싸하게 응답해주는 현상
+		 * - 현존하는 LLM 모델들은 아무리 성능이 좋아도 Hallucination 현상이 발생할 수 있다!!
+		 *   (Hallucination 이 0 인 모델은 없음)
+		 * - 어떤 모델을 쓰던 간에 Hallucination 을 최소화 하는 것이 제일 중요하다.
+		 * 
+		 * 원인)
+		 * LLM (거대 "언어" 모델) 은 지식을 학습하는게 아니라, 자연어를 학습한다. (확률 기반으로)
+		 *   
+		 * 해결방법)
+		 * 다양한 해결 방법들이 있음!! (최소화 시키는 방법들)
+		 * 
+		 * 1. Open book System 으로 처리하기 
+		 * : LLM 에게 프롬프트를 줄 때, 어딘가에 저장된 (DB 등) 질문과 관련된 키워드를 뽑아서
+		 *   프롬프트와 함께 전달하는 방법
+		 * 
+		 * 
+		 */
+		
+	}
+
+}
+
+
+
+
+
+

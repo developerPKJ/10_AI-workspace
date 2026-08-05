@@ -1,0 +1,5 @@
+package com.kh.ai.config;
+
+public class AIConfig {
+
+}

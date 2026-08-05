@@ -1,0 +1,66 @@
+package com.kh.ai.config;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AIConfig {
+	
+	// ChatClient 를 Bean 으로 등록하기
+	@Bean
+	public ChatClient chatClient(ChatClient.Builder builder) {
+		// > ChatClient.Builder : ChatModel 객체를 기반으로 ChatClient 객체를 생성할 때 도와주는 역할
+		
+		// return builder.build();
+		// > build() 메소드 호출 시 ChatClient 객체 생성
+		
+		/*
+		 * * Hallucination (할루시네이션, 환각)
+		 * 
+		 * - LLM 이 사실이 아닌 정보를 마치 사실인것마냥 그럴싸하게 응답해주는 현상
+		 * - 현존하는 LLM 모델들은 아무리 성능이 좋아도 Hallucination 현상이 발생할 수 있다!!
+		 *   (Hallucination 이 0 인 모델은 없음)
+		 * - 어떤 모델을 쓰던 간에 Hallucination 을 최소화 하는 것이 제일 중요하다.
+		 * 
+		 * 원인)
+		 * LLM (거대 "언어" 모델) 은 지식을 학습하는게 아니라, 자연어를 학습한다. (확률 기반으로)
+		 *   
+		 * 해결방법)
+		 * 다양한 해결 방법들이 있음!! (최소화 시키는 방법들)
+		 * 
+		 * 1. Open book System 으로 처리하기 
+		 * : LLM 에게 프롬프트를 줄 때, 어딘가에 저장된 (DB 등) 질문과 관련된 키워드를 뽑아서
+		 *   프롬프트와 함께 전달하는 방법 (검색 증강)
+		 * 예) 챗봇 만들기
+		 * 
+		 * 2. System Prompt 를 추가하기
+		 * : 개발자가 시스템 상에서 미리 지정해둔 추가적인 프롬프트를 (사용자에게는 안보임)
+		 *   User Prompt 와 함께 전달하는 방법
+		 * 
+		 * * System Prompt 작성 팁
+		 * 
+		 * - AI 에게 "역할을 부여 (페르소나)", 답변 스타일, 형식, 제약사항 등을 명시적으로 함께 작성한다.
+		 * - 모든 대화마다 System Prompt 가 관여해서 일관적인 답변을 얻어낼 수 있다!!
+		 * - 또한 AI 답변 스타일에 영향을 줌
+		 * - Hallucination 최소화
+		 * 
+		 * * 실무 사용 예시
+		 * 
+		 * - 고객센터 챗봇 : "너는 XX쇼핑몰의 고객센터 담당자야. 반품/교환 규정에 맞게 답변해줘."
+		 * - 의료 상담 : "너는 건강 상담 전문가야. 너가 근데 의사는 아니니까 의학적 진단은 하지 말고
+		 * 				일반적인 건강 정보만 제공해줘."
+		 * - 법률 도우미 : "너는 법률 용어를 설명해주는 직업이야. 법적 조언은 하지 말고, 개념 설명만 해줘."
+		 * 
+		 * 
+		 */
+		
+	}
+
+}
+
+
+
+
+
+

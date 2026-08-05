@@ -1,0 +1,76 @@
+package com.kh.ai.controller;
+
+import org.springframework.ai.chat.model.ChatModel;
+import org.springframework.ai.chat.prompt.Prompt;
+// > Gemini 를 쓰든, GPT 를 쓰든, Claude 를 쓰든 간에 부모 인터페이스로 가져다 쓴다!!
+//   AI 연동할 모델 종류가 달라지더라도 코드는 똑같이 재사용 가능!! (다형성 적용)
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+
+@Controller
+public class AIController {
+	
+	// ChatModel 객체 의존성 주입 받기
+	// > 별도로 Bean 으로 등록할 필요 없이 바로 가져다 쓸 수 있다!!
+	@Autowired
+	private ChatModel chatModel;
+	// > ChatModel : Spring AI 모듈에서 AI 모델과 직접 통신하는 핵심 객체 (가장 기본적인 객체)
+	//				 call() 메소드로 프롬프트 (사용자의 메세지) 를 전달하고 AI 의 응답을 받아옴
+
+	// 채팅 페이지로 이동 1
+	@GetMapping("/chat1")
+	public String chatPage1() {
+		
+		return "chatting1";
+		// > /WEB-INF/views/chatting1.jsp
+	}
+	
+	// 기본적인 채팅 요청을 받아 처리해주는 컨트롤러
+	@ResponseBody
+	@PostMapping("/chat1/send")
+	public String sendMessage1(String message) {
+		
+		// 요청 시 전달값으로 사용자의 프롬프트를 받아옴
+		// System.out.println(message);
+		
+		// 이 전달받은 message 를 Gemini 서버로 요청해서 또 보내기 (API 방식)
+		// > ChatModel 객체를 이용해서 보내볼 것 (의존성 주입으로 객체 받아오기)
+		String reply = chatModel.call(new Prompt(message))
+								.getResult()
+								.getOutput()
+								.getText();
+		// > ChatModel 객체를 통해 사용자의 프롬프트를 전달하고 결과를 text 문자열로 받아옴
+		
+		// System.out.println(reply);
+		
+		return reply;
+	}
+	
+	// ------------------------------------
+	
+	@GetMapping("/chat2")
+	public String chatPage2() {
+		
+		return "chatting2";
+		// > /WEB-INF/views/chatting2.jsp
+	}
+	
+	// 실제 API 통신을 하는 메소드
+	@PostMapping("/chat2/send")
+	public void sendMessage2(String message) {
+		
+		
+		
+	}
+	
+}
+
+
+
+
+
+

@@ -1,0 +1,101 @@
+package com.kh.ai.config;
+
+import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
+@Configuration
+public class AIConfig {
+	
+	// ChatClient 를 Bean 으로 등록하기
+	@Bean
+	public ChatClient chatClient(ChatClient.Builder builder) {
+		// > ChatClient.Builder : ChatModel 객체를 기반으로 ChatClient 객체를 생성할 때 도와주는 역할
+		
+		// return builder.build();
+		// > build() 메소드 호출 시 ChatClient 객체 생성
+		
+		/*
+		 * * Hallucination (할루시네이션, 환각)
+		 * 
+		 * - LLM 이 사실이 아닌 정보를 마치 사실인것마냥 그럴싸하게 응답해주는 현상
+		 * - 현존하는 LLM 모델들은 아무리 성능이 좋아도 Hallucination 현상이 발생할 수 있다!!
+		 *   (Hallucination 이 0 인 모델은 없음)
+		 * - 어떤 모델을 쓰던 간에 Hallucination 을 최소화 하는 것이 제일 중요하다.
+		 * 
+		 * 원인)
+		 * LLM (거대 "언어" 모델) 은 지식을 학습하는게 아니라, 자연어를 학습한다. (확률 기반으로)
+		 *   
+		 * 해결방법)
+		 * 다양한 해결 방법들이 있음!! (최소화 시키는 방법들)
+		 * 
+		 * 1. Open book System 으로 처리하기 
+		 * : LLM 에게 프롬프트를 줄 때, 어딘가에 저장된 (DB 등) 질문과 관련된 키워드를 뽑아서
+		 *   프롬프트와 함께 전달하는 방법 (검색 증강)
+		 * 예) 챗봇 만들기
+		 * 
+		 * 2. System Prompt 를 추가하기
+		 * : 개발자가 시스템 상에서 미리 지정해둔 추가적인 프롬프트를 (사용자에게는 안보임)
+		 *   User Prompt 와 함께 전달하는 방법
+		 * 
+		 * * System Prompt 작성 팁
+		 * 
+		 * - AI 에게 "역할을 부여 (페르소나)", 답변 스타일, 형식, 제약사항 등을 명시적으로 함께 작성한다.
+		 * - 모든 대화마다 System Prompt 가 관여해서 일관적인 답변을 얻어낼 수 있다!!
+		 * - 또한 AI 답변 스타일에 영향을 줌
+		 * - Hallucination 최소화
+		 * 
+		 * * 실무 사용 예시
+		 * 
+		 * - 고객센터 챗봇 : "너는 XX쇼핑몰의 고객센터 담당자야. 반품/교환 규정에 맞게 답변해줘."
+		 * - 의료 상담 : "너는 건강 상담 전문가야. 너가 근데 의사는 아니니까 의학적 진단은 하지 말고
+		 * 				일반적인 건강 정보만 제공해줘."
+		 * - 법률 도우미 : "너는 법률 용어를 설명해주는 직업이야. 법적 조언은 하지 말고, 개념 설명만 해줘."
+		 * 
+		 * => 실무에서는 이처럼 도메인 특화 AI 서비스를 만들 때 "System Prompt 의 페르소나" 를 자주 이용
+		 */
+		
+		// ChatClient 객체 생성용 빈 등록 구문에서
+		// System Prompt 를 같이 덧씌워 줄 수 있다!! (ChatModel 에서는 지원하지 않는 기능)
+		// > "코딩 교육 도메인" 을 베이스로 System Prompt 작성
+		
+		return builder.defaultSystem("""
+					[역할]
+					너는 10년 경력의 자바/Spring 전문 강사야.
+					Spring Boot, Spring MVC, Spring Data JPA, Spring Security, MyBatis 등
+					자바와 Spring 생태계 전반에 대한 깊은 이해를 갖고 있어.
+					
+					[답변 대상]
+					- 프로그래밍 기초는 알지만 Spring 은 처음 배우는 초보 개발자
+					- 개발자를 하고싶은 취업 준비생
+					
+					[답변 방식]
+					1. 먼저 핵심 개념을 한두 문장으로 요약해서 알려줘
+					2. 그다음 초보자 눈높이에서 비유나 실생활 예시를 들어 설명해줘
+					3. 전문 용어를 사용할 때는 반드시 쉬운 설명을 곁들여줘
+					4. 코드 예제가 필요한 경우 실행 가능한 최소한의 예제를 제공해줘
+					5. 코드에는 반드시 한 줄씩 주석으로 설명을 달아줘
+					6. 마지막에는 자주 하는 실수나 주의할 점을 짚어줘
+					
+					[형식 규칙]
+					- 답변은 한국어로 작성해
+					- 답변은 반드시 존댓말로 해줘
+					- 코드 블록은 자바 문법 하이라이팅을 사용해
+					- 답변이 길어지면 소제목을 구분해서 읽기 쉽게 만들어줘
+					- 불필요하게 장황하게 설명하지 말고 핵심 위주로 답변해
+					
+					[제약사항]
+					- Spring/Java와 관련 없는 질문에는 "Spring 학습과 관련된 질문을 해주세요" 라고 답변해
+					- 확실하지 않은 내용은 추측하지 말고 공식 문서 확인을 권장해줘
+					- deprecated된 방식보다는 최신 Spring Boot 3 버전 기준의 권장 방식을 알려줘
+				""").build();
+		
+	}
+
+}
+
+
+
+
+
+

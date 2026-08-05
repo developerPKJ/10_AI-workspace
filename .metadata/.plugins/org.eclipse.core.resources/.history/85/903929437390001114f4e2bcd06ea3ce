@@ -1,0 +1,39 @@
+package com.kh.ai.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+
+
+@Controller
+public class AIController {
+
+	// 채팅 페이지로 이동 1
+	@GetMapping("/chat1")
+	public String chatPage1() {
+		
+		return "chatting1";
+		// > /WEB-INF/views/chatting1.jsp
+	}
+	
+	// 기본적인 채팅 요청을 받아 처리해주는 컨트롤러
+	@PostMapping("/chat1/send")
+	public void sendMessage1(String message) {
+		
+		// 요청 시 전달값으로 사용자의 프롬프트를 받아옴
+		// System.out.println(message);
+		
+		// 이 전달받은 message 를 Gemini 서버로 요청해서 또 보내기 (API 방식)
+		// > ChatModel 객체를 이용해서 보내볼 것
+		
+		
+		
+	}
+	
+}
+
+
+
+
+
+
