@@ -9,10 +9,14 @@
 </head>
 <body>
 
-	<h1>Spring AI 에서 제공하는 ChatClient 객체를 통해 채팅해보기</h1>
-	
-	<!-- ChatModel 보다 더 다양한 기능을 제공 -->
+	<h1>문맥을 유지하면서 채팅해보기 (대화 기록 유지)</h1>
 
+	<!-- 
+		- 그동안 우리가 만든 대화 채팅은 "1회성 1턴" 임!!
+		- 다음 턴에서 텍스트를 던지면 LLM 은 이전 턴에서 대화했던 내용이 리셋되서
+		  문맥 파악을 하지 못한다.
+	-->
+	
 	<div id="chatMessages"></div>
 	
 	<br>
@@ -26,38 +30,46 @@
 	
 	<script>
 		$(function() {
+			
 			$("#btn").click(function() {
-
+				
 				let message = $("#messageInput").val();
-
-				if (message === "") {
+				
+				if(message.trim().length == 0) {
+					// > 비어있는 메세지일 경우
+					
 					return;
+				
 				} else {
+					// > 비어있지 않은 메세지일 경우
+					
+					// 출력창에 내보내고 입력 초기화 후 요청
 					$("#chatMessages").append("<p>나 : " + message + "</p>");
 					$("#messageInput").val("");
-
+					
 					$.ajax({
 						url : "/ai/chat3/send",
 						type : "post",
 						data : { message : message },
 						success : function(result) {
-							$("#chatMessages").append("<p>AI : " + result + "</p>");
+							
+							$("#chatMessages").append("<p>AI : " + result.replaceAll("\n", "<br>") + "</p>");
+							
 						},
 						error : function() {
-
+							
 							console.log("AI 요청용 ajax 통신 실패!");
 						}
 					});
+					
 				}
 			});
+			
 		});
 	</script>
-	
 
 </body>
 </html>
-
-
 
 
 
