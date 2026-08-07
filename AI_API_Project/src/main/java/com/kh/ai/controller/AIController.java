@@ -1,6 +1,11 @@
 package com.kh.ai.controller;
 
+import java.util.ArrayList;
+
 import org.springframework.ai.chat.client.ChatClient;
+import org.springframework.ai.chat.messages.AssistantMessage;
+import org.springframework.ai.chat.messages.Message;
+import org.springframework.ai.chat.messages.UserMessage;
 import org.springframework.ai.chat.model.ChatModel;
 import org.springframework.ai.chat.prompt.Prompt;
 // > Gemini 를 쓰든, GPT 를 쓰든, Claude 를 쓰든 간에 부모 인터페이스로 가져다 쓴다!!
@@ -82,6 +87,52 @@ public class AIController {
 		// > ChatClient 객체를 통해 사용자의 프롬프트를 전달하고 응답 text 를 받아옴
 		//   ChatModel 대비 코드가 훨씬 간결해짐 (좀 더 명시적이기도 함)
 		
+		return reply;
+	}
+
+	private ArrayList<Message> chatHistory = new ArrayList<>();
+	// - Message 객체 : LLM과 사람이 나누는 대화 내용을 담는 객체
+	// - UserMessage 객체 : 사용자의 텍스트 메시지를 담는 객체
+	// - AssistantMessage 객체 : LLM이 응답한 텍스트 메시지를 담는 객체
+
+
+	@GetMapping("/chat3")
+	public String chatPage3() {
+		return "chatting3";
+		// > /WEB-INF/views/chatting3.jsp 로 포워딩
+	}
+
+	@ResponseBody
+	@PostMapping("/chat3/send")
+	public String sendMessage3(String message) {
+		// 전달받은 message를 API로 넘기기 - ChatModel 객체 이용
+		// 문맥 유지의 원리 : 이전에 나눴던 텍스트와 응답을
+		// ArrayList같은곳에 저장했다가 텍스트 보낼때 같이 보냄
+
+		// 사용자 메세지 대화 기록에 추가
+		chatHistory.add(new UserMessage(message));
+		// DB 테이블에 추가로 insert
+
+		// 대화기록을 LLM에 전달
+		String reply = chatModel.call(new Prompt(chatHistory))
+								.getResult()
+								.getOutput()
+								.getText();
+		// DB 테이블에 추가로 insert
+
+		// chatClient 객체로 문맥을 유지하고 싶으면
+		// String reply = chatClient.prompt(chatHistory)
+		// 					     .call()
+		// 					     .content();
+								
+		// LLM 응답을 대화 기록에 추가
+		chatHistory.add(new AssistantMessage(reply));
+		// 서버가 꺼졌다 켜지면 데이터가 모두 날라감
+		// 대화 맥락을 유지하고 싶으면 실제로는 DB에 따로 저장필요
+		// > 대화자 ID, 채팅내역, User/Assistant 여부, 시간
+		// ArrayList에 해당 아이디의 회원 대화내역 SELECT해와서 시작
+		// > 프라이버시 문제
+
 		return reply;
 	}
 	
