@@ -102,6 +102,10 @@
 	<h3>
 		<a href="/ai/chat2">로컬 LLM 과 채팅해보기 2</a>
 	</h3>
+	
+	<h3>
+		<a href="/ai/chat3">로컬 LLM 과 채팅해보기 3</a>
+	</h3>
 
 </body>
 </html>

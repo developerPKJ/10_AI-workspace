@@ -59,6 +59,14 @@ public class AIController {
 		
 	}
 	
+	// -------------------------------------------
+	
+	@GetMapping("/chat3")
+	public String chatPage3() {
+		
+		return "chatting3";
+	}
+	
 	
 }
 
